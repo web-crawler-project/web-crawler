@@ -31,7 +31,8 @@ def extract_html(html_content):
     # Extract links
     links = []
     for link in soup.find_all('a', href=True):
-        if link['href'].startswith('http') or link['href'].startswith('https'):
+        # Filter only http or https urls
+        if link['href'].startswith('http'):
             links.append(link['href'])
 
     # Convert data to JSON
