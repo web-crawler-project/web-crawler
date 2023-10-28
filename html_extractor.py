@@ -2,11 +2,9 @@ import json
 from bs4 import BeautifulSoup
 
 # Function to extract data (headers, paragraphs) and links from HTML
-# @param html_content: HTML content of the page
+# @param soup: BeautifulSoup Object which stores HTML content
 # @return: JSON data and links
-def extract_html(html_content):
-    # Create a BeautifulSoup object from html content
-    soup = BeautifulSoup(html_content, 'html.parser')
+def extract_html(soup):
 
     extracted_data = {}
 
