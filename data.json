@@ -1,0 +1,23 @@
+{
+  "www.facebook.com": {
+    "html": {},
+    "urls": [
+      "www.googles.com",
+      "www.apples.com"
+    ]
+  },
+  "www.apples.com": {
+    "html": {},
+    "urls": [
+      "www.apples.com",
+      "www.googles.com"
+    ]
+  },
+  "www.googles.com": {
+    "html": {},
+    "urls": [
+      "www.apples.com",
+      "www.googles.com"
+    ]
+  }
+}
