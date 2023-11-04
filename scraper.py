@@ -46,12 +46,12 @@ def scrape_website(url):
         #print("An error occurred:", e)
 
 def get_geolocation(ip_address):
-    url = 'https://geolocation-db.com/jsonp/' + ip_address
+    url = 'https://api.findip.net/' + ip_address +'/?token=20a4a32e0aee4d5595527acb1d23fcfe'
     response = requests.get(url)
     result = response.content.decode()
     result = result.split("(")[1].strip(")")
-    data  = json.loads(result)
-    return data
+    #data  = json.loads(result)
+    return result
 
 if __name__ == '__main__':
-    print(urlopen('https://www.howsmyssl.com/a/check').read())
+    print(scrape_website("https://www.google.com"))
