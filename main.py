@@ -6,11 +6,14 @@ from scraper import scrape_website
 from html_extractor import extract_html
 from storage import write_data, remove_seen_urls, read_seed_urls, read_keywords, initialize_output_file
 
-
+# Task to be executed by each worker thread
 def task(queue, output_file, keywords):
+    # Get a url from the queue
     with mutex:
         url = queue.pop(0)
         print(f"Trying {url}...")
+
+    # Tries to scrape the webpage 5 times, else carry on
     for i in range(5):
         try:
             soup, time, ip, geo = scrape_website(url)
@@ -25,7 +28,7 @@ def task(queue, output_file, keywords):
                 unseen_urls = remove_seen_urls(queue, new_urls, output_file)
                 queue.extend(unseen_urls)
                 write_data(url, data_to_write, output_file)
-                print(f'Finished processing {url}')
+                print(f'Data from {url} has been written to the output file...')
             break
         except:
             sleep(0.1)
@@ -33,7 +36,7 @@ def task(queue, output_file, keywords):
 
 def main():
     # To limit the number of tasks executed
-    limit = 10000
+    limit = 10000 # Change this to vary the number of pages to crawl
     num_submitted = 0
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
@@ -51,7 +54,7 @@ def main():
                 if num_submitted == limit:
                     break
 
-                # Submit a new task if available
+                # Submit new tasks if available
                 for i in range(len(queue)):
                     futures.append(executor.submit(task, queue, output_file, keywords))
                     num_submitted += 1
