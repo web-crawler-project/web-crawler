@@ -14,7 +14,6 @@ def remove_duplicate_urls(new_urls):
 # Returns a set of unique urls that are already in urls.txt
 def read_seed_urls(seed_file):
     try:
-        # TODO: Use file access lock mechanism
         with open(seed_file, 'r') as file:
             urls = [line.strip() for line in file if line.strip()]
     except IOError as e:
@@ -66,7 +65,7 @@ def write_data(url, new_data, output_file):
     except IOError as e:
         print(f'Error writing {output_file}: {e}')
 
-
+# Remove urls which were searched before
 def remove_seen_urls(queue, new_urls, output_file):
     # Process new urls
     new_urls = remove_trailing_slash_from_urls(new_urls)
@@ -77,14 +76,16 @@ def remove_seen_urls(queue, new_urls, output_file):
     set_queue = set(queue)
     return list(set_queue.union(new_unique_urls) - set_queue)
 
-
+# Read list of keywords from file path
 def read_keywords(keyword_file):
     keywords = set()
     try:
         with open(keyword_file, 'r') as file:
             for line in file:
+                # Convert to lower case
                 split_line = line.lower().split()
                 for word in split_line:
+                    # Remove all non-alphanumeric characters
                     replace_word = re.sub(r'\W+', '', word)
                     if replace_word not in keywords:
                         keywords.add(replace_word)
@@ -93,12 +94,16 @@ def read_keywords(keyword_file):
         print(f'Error reading {keyword_file}: {e}')
     return keywords
 
-
+# Create a blank JSON output file with specified output path
 def initialize_output_file(output_file):
     try:
+
+        # Create directory if it does not exist
         directory = os.path.dirname(output_file)
         if not os.path.exists(directory):
             os.makedirs(directory)
+
+        # Create a empty file
         with open(output_file, 'w') as file:
             file.write('')
     except IOError as e:
