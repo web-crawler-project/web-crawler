@@ -1,9 +1,10 @@
 import concurrent.futures
+import datetime
 import threading
 from time import sleep
 from scraper import scrape_website
 from html_extractor import extract_html
-from storage import write_data, remove_seen_urls, read_seed_urls, read_keywords
+from storage import write_data, remove_seen_urls, read_seed_urls, read_keywords, initialize_output_file
 
 
 def task(queue, output_file, keywords):
@@ -32,7 +33,7 @@ def task(queue, output_file, keywords):
 
 def main():
     # To limit the number of tasks executed
-    limit = 100
+    limit = 10000
     num_submitted = 0
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
@@ -61,10 +62,15 @@ def main():
 
 
 if __name__ == "__main__":
+    current_datetime = datetime.datetime.now()
+    formatted_datetime = current_datetime.strftime("%Y-%m-%d_%H-%M-%S")
+    output_file = 'output/' + formatted_datetime + '.json'
+    initialize_output_file(output_file)
+
     mutex = threading.Lock()
-    seed_file = 'urls.txt'
-    keywords_file = 'keywords.txt'
-    output_file = 'data.json'
+    seed_file = 'input/urls.txt'
+    keywords_file = 'input/keywords.txt'
+    output_file = output_file
     queue = read_seed_urls(seed_file)
     keywords = read_keywords(keywords_file)
     main()

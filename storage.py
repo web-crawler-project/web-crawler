@@ -91,3 +91,10 @@ def read_keywords(keyword_file):
     except IOError as e:
         print(f'Error reading {keyword_file}: {e}')
     return keywords
+
+def initialize_output_file(output_file):
+    try:
+        with open(output_file, 'w') as file:
+            file.write('')
+    except IOError as e:
+        print(f'Error writing {output_file}: {e}')
