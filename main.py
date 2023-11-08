@@ -64,6 +64,7 @@ def main():
 
 
 if __name__ == "__main__":
+    # Prepare JSON output file formatted to current date and time
     current_datetime = datetime.datetime.now()
     formatted_datetime = current_datetime.strftime("%Y-%m-%d_%H-%M-%S")
     output_file = 'output/' + formatted_datetime + '.json'
