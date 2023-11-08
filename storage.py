@@ -1,5 +1,6 @@
 import json
 import re
+import os
 
 
 def remove_trailing_slash_from_urls(new_urls):
@@ -92,8 +93,12 @@ def read_keywords(keyword_file):
         print(f'Error reading {keyword_file}: {e}')
     return keywords
 
+
 def initialize_output_file(output_file):
     try:
+        directory = os.path.dirname(output_file)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
         with open(output_file, 'w') as file:
             file.write('')
     except IOError as e:
