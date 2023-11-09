@@ -4,8 +4,6 @@ import re
 
 
 # Function to extract data (headers, paragraphs) and links from HTML
-# @param soup: BeautifulSoup Object which stores HTML content
-# @return: JSON data and links
 def extract_html(soup, keywords):
     extracted_data = {}
 
