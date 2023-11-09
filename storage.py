@@ -46,7 +46,6 @@ def remove_existing_urls(urls, output_file):
 # Write all the urls and extracted data to data.json
 def write_data(url, new_data, output_file):
     try:
-        # TODO: Use file access lock mechanism
         with open(output_file, 'r+') as file:
             try:
                 # Read existing JSON data
